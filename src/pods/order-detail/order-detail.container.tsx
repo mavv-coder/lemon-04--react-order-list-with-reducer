@@ -1,10 +1,11 @@
 import React from "react";
 import { useAppContext, ProductVm } from "../../core/context";
 import { OrderDetailComponent } from "./order-detail.component";
+import { orderStateReducer, actionIds } from "./order-detail.reducer";
 
 export const OrderDetailContainer: React.FC = () => {
   const { productList, setProductList, updateOrderTotalCost } = useAppContext();
-  const [orderState, setOrderState] = React.useState<number>(0);
+  const [orderState, dispatch] = React.useReducer(orderStateReducer, 0);
 
   // Updates the cost property of the products whose input value has been modified
   // Then sets the ProductList State with the updated product
@@ -58,7 +59,7 @@ export const OrderDetailContainer: React.FC = () => {
       return acc;
     }, 0);
     const percentage = getOrderStatePercentage(newOrderState);
-    setOrderState(percentage);
+    dispatch({ type: actionIds.setOrderState, payload: percentage });
   };
 
   return (
