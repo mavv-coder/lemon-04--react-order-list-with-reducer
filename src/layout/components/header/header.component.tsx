@@ -2,14 +2,13 @@ import React from "react";
 import classComponents from "./header.styles";
 import { FormData } from "../../../core/context";
 
+import { InputInfoState } from "./header.reducer";
+
 interface Props {
+  InputInfoState: InputInfoState;
   formData: FormData;
   totalCost: number;
   orderState: number;
-  stateSuccess: boolean;
-  orderNumSuccess: boolean;
-  providerSuccess: boolean;
-  dateSuccess: boolean;
   handleSubmit: (e: React.MouseEvent<HTMLElement>) => void;
   handleNumberInputStyle: (value: string, type: string) => void;
   handleProviderInputStyle: (value: string, type: string) => void;
@@ -22,14 +21,18 @@ export const HeaderComponent: React.FC<Props> = (props) => {
     formData,
     orderState,
     handleSubmit,
-    stateSuccess,
-    orderNumSuccess,
-    providerSuccess,
-    dateSuccess,
     handleNumberInputStyle,
     handleProviderInputStyle,
     handleDateInputStyle,
+    InputInfoState,
   } = props;
+
+  const {
+    stateInputSuccess,
+    orderNumInputSuccess,
+    providerInputSuccess,
+    dateInputSuccess,
+  } = InputInfoState;
 
   const {
     Container,
@@ -49,7 +52,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
         <FlexContainer>
           <InputField>
             <Label>Número</Label>
-            {orderNumSuccess ? (
+            {orderNumInputSuccess ? (
               <InputSuccess
                 type="text"
                 id="orderNum"
@@ -70,7 +73,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
           </InputField>
           <InputField>
             <Label>Proveedor</Label>
-            {providerSuccess ? (
+            {providerInputSuccess ? (
               <InputSuccess
                 type="text"
                 id="provider"
@@ -91,7 +94,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
           </InputField>
           <InputField>
             <Label>Fecha</Label>
-            {dateSuccess ? (
+            {dateInputSuccess ? (
               <InputSuccess
                 type="date"
                 id="date"
@@ -122,7 +125,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
           </InputField>
           <InputField>
             <Label>Estado</Label>
-            {stateSuccess ? (
+            {stateInputSuccess ? (
               <InputStateSuccess
                 type="text"
                 value={`${orderState}%`}

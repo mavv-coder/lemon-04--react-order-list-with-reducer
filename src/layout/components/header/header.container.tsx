@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useAppContext } from "../../../core/context";
 import { switchRoutes } from "../../../core/router";
 import { HeaderComponent } from "./header.component";
+import { InputInfoStateReducer, actionIds } from "./header.reducer";
 
 interface Props {
   orderState: number;
@@ -13,10 +14,14 @@ export const HeaderContainer: React.FC<Props> = (props) => {
   const history = useHistory();
   const { totalCost, formData, setFormData, productList } = useAppContext();
   const { orderState, handleProductState } = props;
-  const [stateSuccess, setStateSuccess] = React.useState<boolean>(false);
-  const [orderNumSuccess, setOrderNumSuccess] = React.useState<boolean>(false);
-  const [providerSuccess, setProviderSuccess] = React.useState<boolean>(false);
-  const [dateSuccess, setDateSuccess] = React.useState<boolean>(false);
+
+  // Creates a reducer with all input state to set their style
+  const [InputInfoState, dispatch] = React.useReducer(InputInfoStateReducer, {
+    stateInputSuccess: false,
+    orderNumInputSuccess: false,
+    providerInputSuccess: false,
+    dateInputSuccess: false,
+  });
 
   // Checks if input fields have any value
   const isReadyFormDataToSubmit = (): boolean =>
@@ -48,43 +53,55 @@ export const HeaderContainer: React.FC<Props> = (props) => {
 
   // Checks the input styles when navigate from other pages
   const refreshAllInputStyleOnLoad = (): void => {
-    formData.orderNum ? setOrderNumSuccess(true) : setOrderNumSuccess(false);
-    formData.provider ? setProviderSuccess(true) : setProviderSuccess(false);
-    formData.date ? setDateSuccess(true) : setDateSuccess(false);
+    formData.orderNum
+      ? dispatch({ type: actionIds.setOrderNumSuccess, payload: true })
+      : dispatch({ type: actionIds.setOrderNumSuccess, payload: false });
+    formData.provider
+      ? dispatch({ type: actionIds.setProviderSuccess, payload: true })
+      : dispatch({ type: actionIds.setProviderSuccess, payload: false });
+    formData.date
+      ? dispatch({ type: actionIds.setDateSuccess, payload: true })
+      : dispatch({ type: actionIds.setDateSuccess, payload: false });
   };
 
   // Update Input OrderNum style to success if the value is correct
   const handleNumberInputStyle = (value: string, type: string): void => {
     handleFormData(value, type);
-    value ? setOrderNumSuccess(true) : setOrderNumSuccess(false);
+    value
+      ? dispatch({ type: actionIds.setOrderNumSuccess, payload: true })
+      : dispatch({ type: actionIds.setOrderNumSuccess, payload: false });
   };
 
   // Update Input Provider style to success if the value is correct
   const handleProviderInputStyle = (value: string, type: string): void => {
     handleFormData(value, type);
-    value ? setProviderSuccess(true) : setProviderSuccess(false);
+    value
+      ? dispatch({ type: actionIds.setProviderSuccess, payload: true })
+      : dispatch({ type: actionIds.setProviderSuccess, payload: false });
   };
 
   // Update Input Date style to success if the value is correct
   const handleDateInputStyle = (value: string, type: string): void => {
     handleFormData(value, type);
-    value ? setDateSuccess(true) : setDateSuccess(false);
+    value
+      ? dispatch({ type: actionIds.setDateSuccess, payload: true })
+      : dispatch({ type: actionIds.setDateSuccess, payload: false });
   };
 
   React.useEffect(() => {
-    setStateSuccess(isReadyOrderStateToSubmit());
+    dispatch({
+      type: actionIds.setStateSuccess,
+      payload: isReadyOrderStateToSubmit(),
+    });
     refreshAllInputStyleOnLoad();
   }, [handleProductState]);
 
   return (
     <HeaderComponent
+      InputInfoState={InputInfoState}
       handleSubmit={handleSubmit}
       totalCost={totalCost}
       orderState={orderState}
-      stateSuccess={stateSuccess}
-      orderNumSuccess={orderNumSuccess}
-      providerSuccess={providerSuccess}
-      dateSuccess={dateSuccess}
       formData={formData}
       handleProviderInputStyle={handleProviderInputStyle}
       handleNumberInputStyle={handleNumberInputStyle}

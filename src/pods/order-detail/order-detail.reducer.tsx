@@ -1,6 +1,6 @@
 interface Action {
   type: string;
-  payload: any;
+  payload: number;
 }
 
 export const actionIds = {
