@@ -52,7 +52,7 @@ export const AppContextProvider: React.FC = (props) => {
   );
 };
 
-export const useAppContext = () => {
+export const useAppContext = (): Context => {
   const context = React.useContext(AppContext);
   return context;
 };

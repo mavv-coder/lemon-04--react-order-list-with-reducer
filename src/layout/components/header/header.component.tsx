@@ -10,9 +10,9 @@ interface Props {
   totalCost: number;
   orderState: number;
   handleSubmit: (e: React.MouseEvent<HTMLElement>) => void;
-  handleNumberInputStyle: (value: string, type: string) => void;
-  handleProviderInputStyle: (value: string, type: string) => void;
-  handleDateInputStyle: (value: string, type: string) => void;
+  handleOnBlurNumberInputStyle: (value: string, type: string) => void;
+  handleOnBlurProviderInputStyle: (value: string, type: string) => void;
+  handleOnBlurDateInputStyle: (value: string, type: string) => void;
 }
 
 export const HeaderComponent: React.FC<Props> = (props) => {
@@ -21,9 +21,9 @@ export const HeaderComponent: React.FC<Props> = (props) => {
     formData,
     orderState,
     handleSubmit,
-    handleNumberInputStyle,
-    handleProviderInputStyle,
-    handleDateInputStyle,
+    handleOnBlurNumberInputStyle,
+    handleOnBlurProviderInputStyle,
+    handleOnBlurDateInputStyle,
     InputInfoState,
   } = props;
 
@@ -58,7 +58,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 id="orderNum"
                 defaultValue={formData.orderNum}
                 onBlur={(e) =>
-                  handleNumberInputStyle(e.target.value, e.target.id)
+                  handleOnBlurNumberInputStyle(e.target.value, e.target.id)
                 }
               />
             ) : (
@@ -66,7 +66,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 type="text"
                 id="orderNum"
                 onBlur={(e) =>
-                  handleNumberInputStyle(e.target.value, e.target.id)
+                  handleOnBlurNumberInputStyle(e.target.value, e.target.id)
                 }
               />
             )}
@@ -79,7 +79,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 id="provider"
                 defaultValue={formData.provider}
                 onBlur={(e) =>
-                  handleProviderInputStyle(e.target.value, e.target.id)
+                  handleOnBlurProviderInputStyle(e.target.value, e.target.id)
                 }
               />
             ) : (
@@ -87,7 +87,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 type="text"
                 id="provider"
                 onBlur={(e) =>
-                  handleProviderInputStyle(e.target.value, e.target.id)
+                  handleOnBlurProviderInputStyle(e.target.value, e.target.id)
                 }
               />
             )}
@@ -100,7 +100,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 id="date"
                 defaultValue={formData.date}
                 onBlur={(e) =>
-                  handleDateInputStyle(e.target.value, e.target.id)
+                  handleOnBlurDateInputStyle(e.target.value, e.target.id)
                 }
               />
             ) : (
@@ -108,7 +108,7 @@ export const HeaderComponent: React.FC<Props> = (props) => {
                 type="date"
                 id="date"
                 onBlur={(e) =>
-                  handleDateInputStyle(e.target.value, e.target.id)
+                  handleOnBlurDateInputStyle(e.target.value, e.target.id)
                 }
               />
             )}

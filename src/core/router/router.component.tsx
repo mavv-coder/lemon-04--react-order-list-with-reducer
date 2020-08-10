@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, HashRouter as Router } from "react-router-dom";
-import { switchRoutes } from "./routes";
 import { OrderDetailScene, CheckoutScene } from "../../scenes";
+import { switchRoutes } from "./routes";
 
 export const RouterComponent: React.FC = () => {
   const { root, orderList, checkout } = switchRoutes;

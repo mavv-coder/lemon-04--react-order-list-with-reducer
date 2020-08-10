@@ -7,13 +7,13 @@ import { InputInfoStateReducer, actionIds } from "./header.reducer";
 
 interface Props {
   orderState: number;
-  handleProductState: (action: boolean) => void;
+  handleProductValidate: (action: boolean) => void;
 }
 
 export const HeaderContainer: React.FC<Props> = (props) => {
   const history = useHistory();
   const { totalCost, formData, setFormData, productList } = useAppContext();
-  const { orderState, handleProductState } = props;
+  const { orderState, handleProductValidate } = props;
 
   // Creates a reducer with all input state to set their style
   const [InputInfoState, dispatch] = React.useReducer(InputInfoStateReducer, {
@@ -46,7 +46,7 @@ export const HeaderContainer: React.FC<Props> = (props) => {
 
   // Updates form properties with values from inputs
   // Then set FormData with new values
-  const handleFormData = (value: string, type: string): void => {
+  const updateFormData = (value: string, type: string): void => {
     const newFormData = { ...formData, [type]: value };
     setFormData(newFormData);
   };
@@ -65,24 +65,27 @@ export const HeaderContainer: React.FC<Props> = (props) => {
   };
 
   // Update Input OrderNum style to success if the value is correct
-  const handleNumberInputStyle = (value: string, type: string): void => {
-    handleFormData(value, type);
+  const handleOnBlurNumberInputStyle = (value: string, type: string): void => {
+    updateFormData(value, type);
     value
       ? dispatch({ type: actionIds.setOrderNumSuccess, payload: true })
       : dispatch({ type: actionIds.setOrderNumSuccess, payload: false });
   };
 
   // Update Input Provider style to success if the value is correct
-  const handleProviderInputStyle = (value: string, type: string): void => {
-    handleFormData(value, type);
+  const handleOnBlurProviderInputStyle = (
+    value: string,
+    type: string
+  ): void => {
+    updateFormData(value, type);
     value
       ? dispatch({ type: actionIds.setProviderSuccess, payload: true })
       : dispatch({ type: actionIds.setProviderSuccess, payload: false });
   };
 
   // Update Input Date style to success if the value is correct
-  const handleDateInputStyle = (value: string, type: string): void => {
-    handleFormData(value, type);
+  const handleOnBlurDateInputStyle = (value: string, type: string): void => {
+    updateFormData(value, type);
     value
       ? dispatch({ type: actionIds.setDateSuccess, payload: true })
       : dispatch({ type: actionIds.setDateSuccess, payload: false });
@@ -94,7 +97,7 @@ export const HeaderContainer: React.FC<Props> = (props) => {
       payload: isReadyOrderStateToSubmit(),
     });
     refreshAllInputStyleOnLoad();
-  }, [handleProductState]);
+  }, [handleProductValidate]);
 
   return (
     <HeaderComponent
@@ -103,9 +106,9 @@ export const HeaderContainer: React.FC<Props> = (props) => {
       totalCost={totalCost}
       orderState={orderState}
       formData={formData}
-      handleProviderInputStyle={handleProviderInputStyle}
-      handleNumberInputStyle={handleNumberInputStyle}
-      handleDateInputStyle={handleDateInputStyle}
+      handleOnBlurProviderInputStyle={handleOnBlurProviderInputStyle}
+      handleOnBlurNumberInputStyle={handleOnBlurNumberInputStyle}
+      handleOnBlurDateInputStyle={handleOnBlurDateInputStyle}
     />
   );
 };

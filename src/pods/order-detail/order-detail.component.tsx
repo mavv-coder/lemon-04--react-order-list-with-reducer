@@ -7,7 +7,7 @@ import { ProductListContainer } from "../../layout/components/product-list";
 interface Props {
   handleProductCost: (id: string, value: number) => void;
   toggleCheckboxValue: (product: ProductVm) => void;
-  handleProductState: (action: boolean) => void;
+  handleProductValidate: (action: boolean) => void;
   orderState: number;
 }
 
@@ -15,7 +15,7 @@ export const OrderDetailComponent: React.FC<Props> = (props) => {
   const {
     handleProductCost,
     toggleCheckboxValue,
-    handleProductState,
+    handleProductValidate,
     orderState,
   } = props;
 
@@ -24,12 +24,12 @@ export const OrderDetailComponent: React.FC<Props> = (props) => {
       <HeadingContainer title="Pedido a proveedor" />
       <HeaderContainer
         orderState={orderState}
-        handleProductState={handleProductState}
+        handleProductValidate={handleProductValidate}
       />
       <ProductListContainer
         handleProductCost={handleProductCost}
         toggleCheckboxValue={toggleCheckboxValue}
-        handleProductState={handleProductState}
+        handleProductValidate={handleProductValidate}
       />
     </>
   );

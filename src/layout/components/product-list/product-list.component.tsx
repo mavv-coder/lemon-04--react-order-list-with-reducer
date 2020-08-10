@@ -6,7 +6,7 @@ interface Props {
   productList: ProductVm[];
   handleProductCost: (id: string, value: number) => void;
   toggleCheckboxValue: (product: ProductVm) => void;
-  handleProductState: (action: boolean) => void;
+  handleProductValidate: (action: boolean) => void;
 }
 
 export const ProductListComponent: React.FC<Props> = (props) => {
@@ -14,7 +14,7 @@ export const ProductListComponent: React.FC<Props> = (props) => {
     productList,
     handleProductCost,
     toggleCheckboxValue,
-    handleProductState,
+    handleProductValidate,
   } = props;
 
   const {
@@ -30,8 +30,8 @@ export const ProductListComponent: React.FC<Props> = (props) => {
   return (
     <>
       <Container>
-        <Button onClick={() => handleProductState(true)}>Validar</Button>
-        <Button onClick={() => handleProductState(false)}>Invalidar</Button>
+        <Button onClick={() => handleProductValidate(true)}>Validar</Button>
+        <Button onClick={() => handleProductValidate(false)}>Invalidar</Button>
       </Container>
       <Table>
         <thead>
